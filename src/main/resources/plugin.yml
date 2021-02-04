@@ -1,0 +1,7 @@
+name: WTFSurvival
+version: ${project.version}
+main: top.jingwenmc.wtfsurvival.WTFSurvival
+api-version: 1.16
+authors: [ jingwenMC ]
+description: A Funny Survival Minigame Framework
+website: www.jingwenmc.top
