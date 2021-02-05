@@ -14,12 +14,10 @@ public class ExceptionUtil {
                 throw new IllegalStateException("Cannot Create File");
             }
             if (!eFile.canWrite()) throw new IOException("errors.txt is not writable");
-            writer.print(("[Error] " + new Date(System.currentTimeMillis())));
-            writer.print(System.lineSeparator());
-            writer.print("Error Details:");
-            writer.print(System.lineSeparator());
-            e.printStackTrace(writer);
-            writer.print(System.lineSeparator());
+            writer.println(("[Error] " + new Date(System.currentTimeMillis())));
+            writer.println("Error Details:");
+            handle(e,writer);
+            writer.println();
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "一个错误已经发生,已将该错误信息保存到插件目录下的 errors.txt");
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "An error has occurred and the error message has been saved to errors.txt in the plugin directory");
         } catch (IOException | IllegalStateException exception) {
@@ -29,16 +27,33 @@ public class ExceptionUtil {
         }
     }
     public static void handle(Throwable exception) {
+        handle(exception,System.err);
+    }
+
+    public static void handle(Throwable exception, PrintStream stream) {
         if(exception == null)return;
-        System.err.println("Caused By:");
-        System.err.println("Type:"+exception.getClass().getName());
-        System.err.println("Message:"+exception.getMessage());
-        System.err.println("Stacktrace:");
+        stream.println("Caused By:");
+        stream.println("Type:"+exception.getClass().getName());
+        stream.println("Message:"+exception.getMessage());
+        stream.println("Stacktrace:");
         for(StackTraceElement element : exception.getStackTrace()) {
-            System.err.println("  Class:"+element.getClassName()+", Method:"+element.getMethodName()
+            stream.println("  Class:"+element.getClassName()+", Method:"+element.getMethodName()
                     +", At Line:"+element.getLineNumber());
         }
-        System.err.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
+        stream.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
+        handle(exception.getCause());
+    }
+    public static void handle(Throwable exception, PrintWriter writer) {
+        if(exception == null)return;
+        writer.println("Caused By:");
+        writer.println("Type:"+exception.getClass().getName());
+        writer.println("Message:"+exception.getMessage());
+        writer.println("Stacktrace:");
+        for(StackTraceElement element : exception.getStackTrace()) {
+            writer.println("  Class:"+element.getClassName()+", Method:"+element.getMethodName()
+                    +", At Line:"+element.getLineNumber());
+        }
+        writer.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
         handle(exception.getCause());
     }
 }
