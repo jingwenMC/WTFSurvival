@@ -25,7 +25,20 @@ public class ExceptionUtil {
         } catch (IOException | IllegalStateException exception) {
             System.err.println("UNEXPECTED ERROR:Cannot Create/Write errors.txt While Recording An Error");
             System.err.println("IF ITS ALL RIGHT, PLEASE REPORT TO DEV.");
-            System.err.println("Message:"+exception.getMessage());
+            handle(exception);
         }
+    }
+    public static void handle(Throwable exception) {
+        if(exception == null)return;
+        System.err.println("Caused By:");
+        System.err.println("Type:"+exception.getClass().getName());
+        System.err.println("Message:"+exception.getMessage());
+        System.err.println("Stacktrace:");
+        for(StackTraceElement element : exception.getStackTrace()) {
+            System.err.println("  Class:"+element.getClassName()+", Method:"+element.getMethodName()
+                    +", At Line:"+element.getLineNumber());
+        }
+        System.err.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
+        handle(exception.getCause());
     }
 }
