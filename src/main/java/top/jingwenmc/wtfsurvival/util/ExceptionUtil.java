@@ -22,7 +22,7 @@ public class ExceptionUtil {
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "An error has occurred and the error message has been saved to errors.txt in the plugin directory");
         } catch (IOException | IllegalStateException exception) {
             System.err.println("UNEXPECTED ERROR:Cannot Create/Write errors.txt While Recording An Error");
-            System.err.println("IF ITS ALL RIGHT, PLEASE REPORT TO DEV.");
+            System.err.println("IF YOUR ENVIRONMENT IS ALL RIGHT, PLEASE REPORT TO DEV.");
             handle(exception);
         }
     }
@@ -41,7 +41,7 @@ public class ExceptionUtil {
                     +", At Line:"+element.getLineNumber());
         }
         stream.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
-        handle(exception.getCause());
+        handle(exception.getCause(),stream);
     }
     public static void handle(Throwable exception, PrintWriter writer) {
         if(exception == null)return;
@@ -54,6 +54,6 @@ public class ExceptionUtil {
                     +", At Line:"+element.getLineNumber());
         }
         writer.println("Have a deeper cause: "+(exception.getCause() != null ? "YES" : "NO"));
-        handle(exception.getCause());
+        handle(exception.getCause(),writer);
     }
 }
