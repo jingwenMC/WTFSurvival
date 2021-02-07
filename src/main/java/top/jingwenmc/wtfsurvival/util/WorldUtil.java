@@ -1,9 +1,10 @@
 package top.jingwenmc.wtfsurvival.util;
-//TODO:Use in future Server Edition
+
 import org.bukkit.*;
 
 import java.io.File;
 
+@Deprecated
 public class WorldUtil {
     public static World createNewWorld(String worldName) {
         try {

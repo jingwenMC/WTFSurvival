@@ -2,3 +2,13 @@ zh_CN:
   info:
     version: 1
   prefix: '&f[&bW&eT&bF&cS&f]'
+  update: #TODO
+    release_available:
+      - "检测到更新的正式发布版本:"
+      - "v%before% => v%after%"
+      - "更新内容:"
+    release_download:
+      - "您可以到此处下载最新版本:"
+  console:
+    loading: "正在初始化..."
+    loading_finish: "初始化完成！"

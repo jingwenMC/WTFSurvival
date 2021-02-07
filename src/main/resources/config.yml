@@ -1,0 +1,4 @@
+#WTFSurvival配置文件
+
+#你将使用的语言,必须存在于lang.yml中.
+lang: "zh_CN"

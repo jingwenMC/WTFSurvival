@@ -1,0 +1,6 @@
+#Example Test Config
+settings:
+  needA: false
+  messA: "HelloWorld"
+  objA:
+    enable: false
