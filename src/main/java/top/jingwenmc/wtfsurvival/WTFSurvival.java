@@ -3,7 +3,7 @@ package top.jingwenmc.wtfsurvival;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
-import top.jingwenmc.wtfsurvival.objects.ConfigAccessor;
+import top.jingwenmc.wtfsurvival.object.ConfigAccessor;
 import top.jingwenmc.wtfsurvival.util.CheckUtil;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 

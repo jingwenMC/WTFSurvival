@@ -45,18 +45,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin><plugin>
-            <groupId>de.garrus.maven</groupId>
-            <artifactId>minecraft-server-plugin</artifactId>
-            <version>1.0</version>
-            <configuration>
-                <serverVersion>1.16.3</serverVersion>
-                <createEula>true</createEula>
-                <serverFolder>run</serverFolder>
-                <cleanPluginFolder>true</cleanPluginFolder>
-            </configuration>
-        </plugin>
-
+            </plugin>
         </plugins>
         <resources>
             <resource>
@@ -89,12 +78,6 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.garrus.maven</groupId>
-            <artifactId>minecraft-server-plugin</artifactId>
-            <version>1.0</version>
-            <type>maven-plugin</type>
         </dependency>
         <!-- Apache Http Begin -->
         <dependency>

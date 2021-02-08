@@ -1,4 +1,4 @@
-package top.jingwenmc.wtfsurvival.events;
+package top.jingwenmc.wtfsurvival.event;
 
 public class LikeUpdateEvent extends CommonEventBase{
     long before;

@@ -6,8 +6,9 @@ public enum LangItem {
     PREFIX("prefix"),
 
     CONSOLE_LOADING("console.loading"),
-    CONSOLE_LOADING_FINISH("console.loading_finish")
+    CONSOLE_LOADING_FINISH("console.loading_finish"),
 
+    SERVER_NO_CMD("server.no_cmd")
     ;
     private final String value;
     LangItem(String value) {

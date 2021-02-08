@@ -1,4 +1,4 @@
-package top.jingwenmc.wtfsurvival.events;
+package top.jingwenmc.wtfsurvival.event;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;

@@ -1,4 +1,4 @@
-package top.jingwenmc.wtfsurvival.objects;
+package top.jingwenmc.wtfsurvival.object;
 /*
  * Copyright (C) 2012
  *

@@ -1,7 +1,7 @@
 zh_CN:
   info:
     version: 1
-  prefix: '&f[&bW&eT&bF&cS&f]'
+  prefix: '&f[&bW&eT&bF&cS&f] &b'
   update: #TODO
     release_available:
       - "检测到更新的正式发布版本:"
@@ -12,3 +12,5 @@ zh_CN:
   console:
     loading: "正在初始化..."
     loading_finish: "初始化完成！"
+  server:
+    no_cmd: "未找到指令/错误的使用方法."
