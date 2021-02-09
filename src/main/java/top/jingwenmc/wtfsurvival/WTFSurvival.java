@@ -1,9 +1,14 @@
 package top.jingwenmc.wtfsurvival;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
+import top.jingwenmc.wtfsurvival.listener.PlayerInOutListeners;
+import top.jingwenmc.wtfsurvival.manager.GameManager;
+import top.jingwenmc.wtfsurvival.manager.SubCommandManager;
 import top.jingwenmc.wtfsurvival.object.ConfigAccessor;
+import top.jingwenmc.wtfsurvival.object.Game;
 import top.jingwenmc.wtfsurvival.util.CheckUtil;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 
@@ -16,6 +21,8 @@ public final class WTFSurvival extends JavaPlugin {
     private static WTFSurvival instance;
     private ConfigAccessor config;
     private ConfigAccessor lang;
+    private SubCommandManager mainCommandManager;
+    private GameManager gameManager;
 
     @Override
     public void onEnable() {
@@ -37,7 +44,12 @@ public final class WTFSurvival extends JavaPlugin {
         getLogger().log(Level.INFO,"正在检查语言文件...");
         checkLang();
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING);
-
+        mainCommandManager = new SubCommandManager();
+        gameManager = new GameManager();
+        getCommand("wtfs").setExecutor(mainCommandManager);
+        getCommand("wtfs").setTabCompleter(mainCommandManager);
+        Bukkit.getPluginManager().registerEvents(new PlayerInOutListeners(),this);
+        MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING_FINISH);
     }
 
     @Override
@@ -63,6 +75,10 @@ public final class WTFSurvival extends JavaPlugin {
     @Override
     public void reloadConfig() {
         config.reloadConfig();
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 
     public static WTFSurvival getInstance() {

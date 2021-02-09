@@ -2,3 +2,6 @@
 
 #你将使用的语言,必须存在于lang.yml中.
 lang: "zh_CN"
+
+#监测的Bilibili账户UID
+bili_uid: 8689128

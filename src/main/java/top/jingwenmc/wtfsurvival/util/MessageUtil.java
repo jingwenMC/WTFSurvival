@@ -42,8 +42,27 @@ public class MessageUtil {
         sendWrappedMessage(sender, langItem, true, new String[]{}, new String[]{});
     }
 
+    public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem) {
+        for(CommandSender sender : senders)
+        sendWrappedMessage(sender, langItem, true, new String[]{}, new String[]{});
+    }
+
     public static void sendWrappedMessage(CommandSender sender, LangItem langItem, boolean prefix) {
         sendWrappedMessage(sender, langItem, prefix, new String[]{}, new String[]{});
+    }
+
+    public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem, boolean prefix) {
+        for(CommandSender sender : senders)
+        sendWrappedMessage(sender, langItem, prefix, new String[]{}, new String[]{});
+    }
+
+    public static void sendWrappedMessage(CommandSender sender, LangItem langItem, String[] replaceFrom , String[] replaceTo) {
+        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, true);
+    }
+
+    public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem, String[] replaceFrom , String[] replaceTo) {
+        for(CommandSender sender : senders)
+        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, true);
     }
 
     public static void sendWrappedMessageToConsole(LangItem langItem,boolean prefix, String[] replaceFrom , String[] replaceTo) {
@@ -51,6 +70,11 @@ public class MessageUtil {
     }
 
     public static void sendWrappedMessage(CommandSender sender, LangItem langItem, boolean prefix, String[] replaceFrom , String[] replaceTo) {
+        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, prefix);
+    }
+
+    public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem, boolean prefix, String[] replaceFrom , String[] replaceTo) {
+        for(CommandSender sender : senders)
         sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, prefix);
     }
 

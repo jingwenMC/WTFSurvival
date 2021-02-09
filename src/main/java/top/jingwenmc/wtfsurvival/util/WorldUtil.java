@@ -4,7 +4,6 @@ import org.bukkit.*;
 
 import java.io.File;
 
-@Deprecated
 public class WorldUtil {
     public static World createNewWorld(String worldName) {
         try {

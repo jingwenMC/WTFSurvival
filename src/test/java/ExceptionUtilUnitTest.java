@@ -10,5 +10,6 @@ public class ExceptionUtilUnitTest {
                 new IOException("CauseTest",
                 new IllegalStateException()));
         ExceptionUtil.handle(throwable,System.out);
+        System.out.println();
     }
 }

@@ -1,5 +1,8 @@
 package top.jingwenmc.wtfsurvival.util;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import top.jingwenmc.wtfsurvival.WTFSurvival;
 
 import java.io.*;
@@ -22,6 +25,12 @@ public class ExceptionUtil {
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "An error has occurred and the error message has been saved to errors.txt in the plugin directory");
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "请检查你的配置文件或语言文件是否出现错误,否则请将该错误反馈给开发者.");
             WTFSurvival.getInstance().getLogger().log(Level.SEVERE, "Please check your configuration file or language file for errors, otherwise please report the error to the developer. ");
+            for(CommandSender sender : Bukkit.getOnlinePlayers()) {
+                if(sender.isOp()) {
+                    sender.sendMessage(ChatColor.RED + "[WTFS-ERROR] An error has occurred, please check the console.");
+                    sender.sendMessage(ChatColor.RED + "[WTFS-错误] 发生了一个错误，请检查控制台。 ");
+                }
+            }
         } catch (IOException | IllegalStateException exception) {
             System.err.println("意外的错误：记录错误时无法创建/写入 errors.txt");
             System.err.println("UNEXPECTED ERROR:Cannot Create/Write errors.txt while recording an error");
