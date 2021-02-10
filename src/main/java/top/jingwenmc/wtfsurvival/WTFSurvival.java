@@ -51,7 +51,7 @@ public final class WTFSurvival extends JavaPlugin {
         mainCommandManager = new SubCommandManager();
         gameManager = new GameManager();
 
-        mainCommandManager.register(new CMDhelp(),"");
+        mainCommandManager.register(new CMDhelp(),null);
         mainCommandManager.register(new CMDhelp(),"help");
         mainCommandManager.register(new CMDstart(),"start");
         mainCommandManager.register(new CMDend(),"end");

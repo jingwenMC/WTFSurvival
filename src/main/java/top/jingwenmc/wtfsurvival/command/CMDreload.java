@@ -1,7 +1,10 @@
 package top.jingwenmc.wtfsurvival.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import top.jingwenmc.wtfsurvival.WTFSurvival;
+import top.jingwenmc.wtfsurvival.enums.LangItem;
 import top.jingwenmc.wtfsurvival.object.CommandItem;
 import top.jingwenmc.wtfsurvival.object.Game;
 import top.jingwenmc.wtfsurvival.task.LikeUpdateListener;
@@ -33,6 +36,7 @@ public class CMDreload implements CommandItem {
             WTFSurvival.getInstance().getLogger().log(Level.INFO,"正在检查语言文件...");
             WTFSurvival.getInstance().checkLang();
             LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
+            MessageUtil.sendWrappedMessage(Bukkit.getOnlinePlayers().toArray(new Player[0]), LangItem.SERVER_RELOAD_FINISH);
             return true;
         } catch (Throwable e) {
             ExceptionUtil.print(e);

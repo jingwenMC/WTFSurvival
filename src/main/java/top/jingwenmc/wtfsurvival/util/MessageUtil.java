@@ -57,12 +57,12 @@ public class MessageUtil {
     }
 
     public static void sendWrappedMessage(CommandSender sender, LangItem langItem, String[] replaceFrom , String[] replaceTo) {
-        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, true);
+        sendWrappedMessage(sender, langItem, true, replaceFrom, replaceTo);
     }
 
     public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem, String[] replaceFrom , String[] replaceTo) {
         for(CommandSender sender : senders)
-        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, true);
+        sendWrappedMessage(sender, langItem, true, replaceFrom, replaceTo);
     }
 
     public static void sendWrappedMessageToConsole(LangItem langItem,boolean prefix, String[] replaceFrom , String[] replaceTo) {
@@ -98,8 +98,6 @@ public class MessageUtil {
 
     private static void sendWrappedMessage(CommandSender sender, String rootWithLang, String[] replaceFrom , String[] replaceTo, boolean prefix) {
         try {
-            System.out.println(replaceFrom);
-            System.out.println(replaceTo);
             if (getConfig().isList(rootWithLang)) {
                 for (String s : getConfig().getStringList(rootWithLang)) {
                     int i = 0;

@@ -88,15 +88,9 @@ public class LoginUtil {
                                     locked = false;
                                     return;
                                 }
-                                //STEP4
-                                if(verify()) {
                                     MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_LOGGED_IN);
                                     locked = false;
                                     LikeToGiveEffects.isLoggedIn = true;
-                                    return;
-                                }
-                                MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
-                                locked = false;
                             }
                         }.runTask(WTFSurvival.getInstance());
                     }

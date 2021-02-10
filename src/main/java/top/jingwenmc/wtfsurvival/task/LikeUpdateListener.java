@@ -10,6 +10,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
+import top.jingwenmc.wtfsurvival.WTFSurvival;
 import top.jingwenmc.wtfsurvival.event.LikeUpdateEvent;
 import top.jingwenmc.wtfsurvival.games.LikeToGiveEffects;
 import top.jingwenmc.wtfsurvival.util.ExceptionUtil;
@@ -31,7 +32,12 @@ public class LikeUpdateListener extends BukkitRunnable {
             JSONObject jsonObject1 = jsonObject.getJSONObject("data");
             int now = jsonObject1.getIntValue("likes");
             if(now > before) {
-                Bukkit.getPluginManager().callEvent(new LikeUpdateEvent(before,now));
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        Bukkit.getPluginManager().callEvent(new LikeUpdateEvent(before,now));
+                    }
+                }.runTask(WTFSurvival.getInstance());
             }
             before = now;
             }
