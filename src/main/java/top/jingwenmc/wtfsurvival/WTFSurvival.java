@@ -3,12 +3,17 @@ package top.jingwenmc.wtfsurvival;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import top.jingwenmc.wtfsurvival.command.CMDend;
+import top.jingwenmc.wtfsurvival.command.CMDhelp;
+import top.jingwenmc.wtfsurvival.command.CMDreload;
+import top.jingwenmc.wtfsurvival.command.CMDstart;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
 import top.jingwenmc.wtfsurvival.listener.PlayerInOutListeners;
 import top.jingwenmc.wtfsurvival.manager.GameManager;
 import top.jingwenmc.wtfsurvival.manager.SubCommandManager;
 import top.jingwenmc.wtfsurvival.object.ConfigAccessor;
 import top.jingwenmc.wtfsurvival.object.Game;
+import top.jingwenmc.wtfsurvival.task.LikeUpdateListener;
 import top.jingwenmc.wtfsurvival.util.CheckUtil;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 
@@ -43,12 +48,21 @@ public final class WTFSurvival extends JavaPlugin {
         getLogger().log(Level.INFO,"Checking Language file...");
         getLogger().log(Level.INFO,"正在检查语言文件...");
         checkLang();
+        LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING);
         mainCommandManager = new SubCommandManager();
         gameManager = new GameManager();
+
+        mainCommandManager.register(new CMDhelp(),"");
+        mainCommandManager.register(new CMDhelp(),"help");
+        mainCommandManager.register(new CMDstart(),"start");
+        mainCommandManager.register(new CMDend(),"end");
+        mainCommandManager.register(new CMDreload(),"reload");
+
         getCommand("wtfs").setExecutor(mainCommandManager);
         getCommand("wtfs").setTabCompleter(mainCommandManager);
         Bukkit.getPluginManager().registerEvents(new PlayerInOutListeners(),this);
+        new LikeUpdateListener().runTaskTimerAsynchronously(this,15,15);
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING_FINISH);
     }
 
@@ -77,12 +91,20 @@ public final class WTFSurvival extends JavaPlugin {
         config.reloadConfig();
     }
 
+    public ConfigAccessor getLang() {
+        return lang;
+    }
+
     public GameManager getGameManager() {
         return gameManager;
     }
 
     public static WTFSurvival getInstance() {
         return instance;
+    }
+
+    public SubCommandManager getMainCommandManager() {
+        return mainCommandManager;
     }
 
     public void checkLang() {

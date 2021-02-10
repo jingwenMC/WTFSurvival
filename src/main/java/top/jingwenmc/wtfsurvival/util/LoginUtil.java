@@ -18,7 +18,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 import top.jingwenmc.wtfsurvival.WTFSurvival;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
-import top.jingwenmc.wtfsurvival.games.LikeToGiveItems;
+import top.jingwenmc.wtfsurvival.games.LikeToGiveEffects;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -32,9 +32,11 @@ public class LoginUtil {
     public static void startLogin(CommandSender sender) {
         if(locked) {
             MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_SOMEONE_IS_LOGGING_IN);
+            return;
         }
-        if(LikeToGiveItems.isLoggedIn) {
+        if(LikeToGiveEffects.isLoggedIn) {
             MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_ALREADY);
+            return;
         }
         if(Util.isNoPerm(sender,"wtfs.login"))return;
         new BukkitRunnable() {
@@ -86,7 +88,7 @@ public class LoginUtil {
                 if(verify()) {
                     MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_LOGGED_IN);
                     locked = false;
-                    LikeToGiveItems.isLoggedIn = true;
+                    LikeToGiveEffects.isLoggedIn = true;
                     return;
                 }
                 MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
@@ -128,7 +130,6 @@ public class LoginUtil {
             HttpEntity responseEntity = response.getEntity();
             if (responseEntity != null) {
                 String result = EntityUtils.toString(responseEntity);
-                System.out.println(result);
                 JSONObject jsonObject = JSON.parseObject(result);
                 if(!jsonObject.getBoolean("status")) {
                     if(jsonObject.getIntValue("data") == -4) return 0;

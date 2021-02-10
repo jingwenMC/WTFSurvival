@@ -54,6 +54,14 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/maven/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
@@ -66,7 +74,6 @@
             </resource>
         </resources>
     </build>
-
     <repositories>
         <repository>
             <id>spigotmc-repo</id>

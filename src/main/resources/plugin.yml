@@ -13,3 +13,5 @@ commands:
 permissions:
   wtfs.login:
     default: op
+  wtfs.admin:
+    default: op

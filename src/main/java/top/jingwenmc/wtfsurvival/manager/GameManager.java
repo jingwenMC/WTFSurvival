@@ -13,6 +13,8 @@ import java.util.Map;
 public class GameManager {
     Map<String , Game> gameMap = new HashMap<>();
     Map<String , BukkitTask> taskMap = new HashMap<>();
+    //K: Player's name  V: Game ID
+    Map<String , String> playerMap = new HashMap<>();
 
     public String startNewGame(Player[] players, GameplayRule rule) {
         Game game = new Game(players , rule);
@@ -24,12 +26,15 @@ public class GameManager {
                 game.getGameplayRule().loop();
             }
         }.runTaskTimerAsynchronously(WTFSurvival.getInstance(),0,1));
+        for(Player player : players) {
+            playerMap.put(player.getName(),game.getGameID());
+        }
         return game.getGameID();
     }
 
     public boolean endGame(String gameID) {
         if(!gameMap.containsKey(gameID))return false;
-        gameMap.get(gameID).tryToEnd();
+        gameMap.get(gameID).end();
         return true;
     }
 
@@ -45,5 +50,17 @@ public class GameManager {
     public Game getGame(String gameID) {
         if(!gameMap.containsKey(gameID))return null;
         return gameMap.get(gameID);
+    }
+
+    public void playerDisconnect(Player player) {
+        //todo: improve
+        if(playerMap.containsKey(player.getName())) {
+            getGame(playerMap.get(player.getName())).disconnect(player);
+            playerMap.remove(player.getName());
+        }
+    }
+
+    public Game[] getGames() {
+        return gameMap.values().toArray(new Game[0]);
     }
 }
