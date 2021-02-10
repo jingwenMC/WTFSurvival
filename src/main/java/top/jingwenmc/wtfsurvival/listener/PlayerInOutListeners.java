@@ -11,13 +11,13 @@ import top.jingwenmc.wtfsurvival.util.MessageUtil;
 public class PlayerInOutListeners implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(MessageUtil.getRawMessage(LangItem.GAME_JOIN)
+        event.setJoinMessage(MessageUtil.getRawMessage(LangItem.PREFIX)+MessageUtil.getRawMessage(LangItem.GAME_JOIN)
         .replaceAll("%player%",event.getPlayer().getName()));
     }
 
     @EventHandler
     public void onLeft(PlayerQuitEvent event) {
-        event.setQuitMessage(MessageUtil.getRawMessage(LangItem.GAME_LEFT)
+        event.setQuitMessage(MessageUtil.getRawMessage(LangItem.PREFIX)+MessageUtil.getRawMessage(LangItem.GAME_LEFT)
                 .replaceAll("%player%",event.getPlayer().getName()));
         WTFSurvival.getInstance().getGameManager().playerDisconnect(event.getPlayer());
     }
