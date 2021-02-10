@@ -2,13 +2,6 @@ zh_CN:
   info:
     version: 1
   prefix: '&f[&bW&eT&bF&cS&f] &b'
-  update: #TODO
-    release_available:
-      - "检测到更新的正式发布版本:"
-      - "v%before% -> v%after%"
-      - "更新内容:"
-    release_download:
-      - "您可以到此处下载最新版本:"
   console:
     loading: "正在初始化..."
     loading_finish: "初始化完成！"
@@ -19,11 +12,11 @@ zh_CN:
     help:
       - "WTFSv1 - 帮助"
       - "作者：jingwenMC"
-      - "================================"
+      - "================================="
       - "/wtfs help   -  打开本页面"
       - "/wtfs start  -  开始游戏"
       - "/wtfs end    -  结束游戏"
-      - "/wtfs reload -  重载配置文件，会结束游戏"
+      - "/wtfs reload -  重载配置文件以及语言文件，会结束游戏"
       - "/wtfs report -  生成系统报告，用于调试"
       - "/wtfs login  -  登录Bilibili账号"
   game:

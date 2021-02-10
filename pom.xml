@@ -6,7 +6,7 @@
 
     <groupId>top.jingwenmc</groupId>
     <artifactId>WTFSurvival</artifactId>
-    <version>1.0.0-INDEV</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>jar</packaging>
 
     <name>WTFSurvival</name>
