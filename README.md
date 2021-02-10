@@ -26,7 +26,8 @@ wtfs.admin|OP|允许控制游戏的开始和停止，插件的重载，以及报
 
 ## 声明
 由于Bilibili平台的限制，本插件必须登录Bilibili账号才能获取数据。
-本插件不会以任何方式收集、上传账号数据至第三方。
+本插件不会以任何方式收集、上传账号数据至第三方。  
+本插件采用GPL-3.0许可证进行许可，具体条款请见 [此处](https://github.com/jingwenMC/WTFSurvival/blob/master/LICENSE) 。
 
 ## 鸣谢
 感谢 [JetBrains s.r.o.](https://www.jetbrains.com/?from=WTFSurvival) 为本项目提供的IDE。
