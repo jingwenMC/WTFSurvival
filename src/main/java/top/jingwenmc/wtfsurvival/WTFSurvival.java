@@ -3,10 +3,7 @@ package top.jingwenmc.wtfsurvival;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import top.jingwenmc.wtfsurvival.command.CMDend;
-import top.jingwenmc.wtfsurvival.command.CMDhelp;
-import top.jingwenmc.wtfsurvival.command.CMDreload;
-import top.jingwenmc.wtfsurvival.command.CMDstart;
+import top.jingwenmc.wtfsurvival.command.*;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
 import top.jingwenmc.wtfsurvival.listener.PlayerInOutListeners;
 import top.jingwenmc.wtfsurvival.manager.GameManager;
@@ -58,6 +55,7 @@ public final class WTFSurvival extends JavaPlugin {
         mainCommandManager.register(new CMDstart(),"start");
         mainCommandManager.register(new CMDend(),"end");
         mainCommandManager.register(new CMDreload(),"reload");
+        mainCommandManager.register(new CMDreport(),"report");
 
         getCommand("wtfs").setExecutor(mainCommandManager);
         getCommand("wtfs").setTabCompleter(mainCommandManager);

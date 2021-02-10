@@ -8,7 +8,7 @@ import top.jingwenmc.wtfsurvival.object.Game;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 import top.jingwenmc.wtfsurvival.util.Util;
 
-public class CMDend extends CommandItem {
+public class CMDend implements CommandItem {
     @Override
     public boolean onCommand(String[] args, CommandSender sender) {
         if(Util.isNoPerm(sender,"wtfs.admin"))return true;

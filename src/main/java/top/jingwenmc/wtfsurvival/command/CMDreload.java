@@ -12,7 +12,7 @@ import top.jingwenmc.wtfsurvival.util.Util;
 
 import java.util.logging.Level;
 
-public class CMDreload extends CommandItem {
+public class CMDreload implements CommandItem {
     @Override
     public boolean onCommand(String[] args, CommandSender sender) {
         //3 needs to reload

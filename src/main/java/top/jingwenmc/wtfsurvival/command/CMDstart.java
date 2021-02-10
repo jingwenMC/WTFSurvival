@@ -10,7 +10,7 @@ import top.jingwenmc.wtfsurvival.object.CommandItem;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 import top.jingwenmc.wtfsurvival.util.Util;
 
-public class CMDstart extends CommandItem {
+public class CMDstart implements CommandItem {
     @Override
     public boolean onCommand(String[] args, CommandSender sender) {
         if(Util.isNoPerm(sender,"wtfs.admin"))return true;

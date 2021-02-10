@@ -24,6 +24,7 @@ zh_CN:
       - "/wtfs start  -  开始游戏"
       - "/wtfs end    -  结束游戏"
       - "/wtfs reload -  重载配置文件，会结束游戏"
+      - "/wtfs report -  生成系统报告，用于调试"
   game:
     start: "游戏开始!游戏内的玩家:[%players%]"
     started: "游戏已经开始了!"
