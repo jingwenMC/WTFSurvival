@@ -9,3 +9,6 @@ bili_uid:
 
 #药水效果时长 / 单位:游戏刻( 1/20 秒)
 potion_time: 200
+
+#药水效果等级(从1开始)
+potion_level: 1

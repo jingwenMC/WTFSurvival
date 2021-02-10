@@ -29,7 +29,9 @@ public class Util {
 
     public static PotionEffect setEffectToPlayers(Player[] players) {
         PotionEffectType type = getRandomType(new Random());
-        PotionEffect effect = new PotionEffect(type, WTFSurvival.getInstance().getConfig().getInt("potion_time"),0);
+        PotionEffect effect = new PotionEffect(type,
+                WTFSurvival.getInstance().getConfig().getInt("potion_time"),
+                WTFSurvival.getInstance().getConfig().getInt("potion_level"));
         for(Player player : players) {
             player.addPotionEffect(effect);
         }
