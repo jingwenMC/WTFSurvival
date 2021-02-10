@@ -32,8 +32,8 @@ public final class WTFSurvival extends JavaPlugin {
         getLogger().log(Level.INFO,"Loading Configuration and Language file...");
         getLogger().log(Level.INFO,"正在加载配置文件和语言文件...");
         config = new ConfigAccessor(this,"config.yml");
-        config.saveDefaultConfig();
         lang = new ConfigAccessor(this,"lang.yml");
+        config.saveDefaultConfig();
         lang.saveDefaultConfig();
         getLogger().log(Level.INFO,"Checking Config file...");
         getLogger().log(Level.INFO,"正在检查配置文件...");
@@ -44,6 +44,8 @@ public final class WTFSurvival extends JavaPlugin {
 
         getLogger().log(Level.INFO,"Checking Language file...");
         getLogger().log(Level.INFO,"正在检查语言文件...");
+        System.out.println(lang.getConfig().getString("zh_CN.info.version"));
+        System.out.println(lang.getConfig().getString("zh_CN.prefix"));
         checkLang();
         LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING);
@@ -56,6 +58,7 @@ public final class WTFSurvival extends JavaPlugin {
         mainCommandManager.register(new CMDend(),"end");
         mainCommandManager.register(new CMDreload(),"reload");
         mainCommandManager.register(new CMDreport(),"report");
+        mainCommandManager.register(new CMDlogin(),"login");
 
         getCommand("wtfs").setExecutor(mainCommandManager);
         getCommand("wtfs").setTabCompleter(mainCommandManager);
@@ -66,7 +69,7 @@ public final class WTFSurvival extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        mainCommandManager.sendCommand(new String[]{"end"},Bukkit.getConsoleSender());
     }
 
     @Override

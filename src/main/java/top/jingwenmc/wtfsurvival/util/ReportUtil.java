@@ -4,6 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import top.jingwenmc.wtfsurvival.WTFSurvival;
+import top.jingwenmc.wtfsurvival.event.LikeUpdateEvent;
+import top.jingwenmc.wtfsurvival.games.LikeToGiveEffects;
+import top.jingwenmc.wtfsurvival.task.LikeUpdateListener;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -60,6 +63,11 @@ public class ReportUtil {
             writer.println("System OS Arch: "+System.getProperty("os.arch"));
             writer.println("System OS Version: "+System.getProperty("os.version"));
             writer.println("Running Dir: "+System.getProperty("user.dir"));
+            writer.println();
+            writer.println("SECTION 4 : MISC");
+            writer.println();
+            writer.println("Logged in:"+ LikeToGiveEffects.isLoggedIn);
+            writer.println("oAuth Key:"+LoginUtil.oauthKey);
 
         } catch (IOException | IllegalStateException exception) {
             System.err.println("意外的错误：生成报告时无法创建/写入 report.txt");

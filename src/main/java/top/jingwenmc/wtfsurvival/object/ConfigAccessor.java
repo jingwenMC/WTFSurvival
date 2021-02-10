@@ -48,6 +48,7 @@ public class ConfigAccessor {
         if (folder == null)
             throw new IllegalStateException();
         this.configFile = new File(folder, fileName);
+        this.fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
     }
 
     public void forceRename(String name) {
@@ -58,13 +59,6 @@ public class ConfigAccessor {
 
     public void reloadConfig() {
         fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
-
-        // Look for defaults in the jar
-        InputStream defConfigStream = plugin.getResource(fileName);
-        if (defConfigStream != null) {
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defConfigStream));
-            fileConfiguration.setDefaults(defConfig);
-        }
     }
 
     public FileConfiguration getConfig() {

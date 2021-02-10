@@ -82,6 +82,8 @@ public class MessageUtil {
     private static String getRawMessage(String rootWithLang) {
         try {
             StringBuilder r = new StringBuilder();
+            //TODO: Remove
+            System.out.println("[DEBUG] "+rootWithLang+" is List? "+getConfig().isList(rootWithLang));
             if (getConfig().isList(rootWithLang)) {
                 for (String s : getConfig().getStringList(rootWithLang)) {
                     r.append(s).append(System.lineSeparator());
