@@ -48,7 +48,6 @@ public class ConfigAccessor {
         if (folder == null)
             throw new IllegalStateException();
         this.configFile = new File(folder, fileName);
-        this.fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
     }
 
     public void forceRename(String name) {

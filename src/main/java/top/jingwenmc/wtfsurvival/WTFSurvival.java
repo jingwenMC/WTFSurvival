@@ -12,6 +12,7 @@ import top.jingwenmc.wtfsurvival.object.ConfigAccessor;
 import top.jingwenmc.wtfsurvival.object.Game;
 import top.jingwenmc.wtfsurvival.task.LikeUpdateListener;
 import top.jingwenmc.wtfsurvival.util.CheckUtil;
+import top.jingwenmc.wtfsurvival.util.ExceptionUtil;
 import top.jingwenmc.wtfsurvival.util.MessageUtil;
 
 import java.text.SimpleDateFormat;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.logging.Level;
 
 public final class WTFSurvival extends JavaPlugin {
-    public static final String configVersion = "1";
+    public static final int configVersion = 1;
     private static WTFSurvival instance;
     private ConfigAccessor config;
     private ConfigAccessor lang;
@@ -44,8 +45,6 @@ public final class WTFSurvival extends JavaPlugin {
 
         getLogger().log(Level.INFO,"Checking Language file...");
         getLogger().log(Level.INFO,"正在检查语言文件...");
-        System.out.println(lang.getConfig().getString("zh_CN.info.version"));
-        System.out.println(lang.getConfig().getString("zh_CN.prefix"));
         checkLang();
         LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING);
@@ -69,7 +68,7 @@ public final class WTFSurvival extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        mainCommandManager.sendCommand(new String[]{"end"},Bukkit.getConsoleSender());
+
     }
 
     @Override
@@ -109,17 +108,22 @@ public final class WTFSurvival extends JavaPlugin {
     }
 
     public void checkLang() {
-        if(!MessageUtil.getRawMessage(LangItem.INFO_VERSION).equalsIgnoreCase(configVersion)) {
-            getLogger().log(Level.SEVERE, "FATAL:Language file's version not correct");
-            getLogger().log(Level.SEVERE, "致命错误：语言文件的版本不正确");
-            getLogger().log(Level.SEVERE, "Do you updated you language file after you updated the plugin?");
-            getLogger().log(Level.SEVERE, "更新插件后， 您是否更新了语言文件？");
-            getLogger().log(Level.SEVERE, "We will regenerate a language file for you");
-            getLogger().log(Level.SEVERE, "我们将会为您重新生成一份语言文件");
-            lang.forceRename("lang-backup-"+new SimpleDateFormat().format(new Date()));
-            lang = new ConfigAccessor(this,"lang.yml");
-            lang.saveDefaultConfig();
+        try {
+            if (lang.getConfig().getInt(MessageUtil.getSelectedLang() + "." + "info.version") != 1) {
+                getLogger().log(Level.SEVERE, "FATAL:Language file's version not correct");
+                getLogger().log(Level.SEVERE, "致命错误：语言文件的版本不正确");
+                getLogger().log(Level.SEVERE, "Do you updated you language file after you updated the plugin?");
+                getLogger().log(Level.SEVERE, "更新插件后， 您是否更新了语言文件？");
+                getLogger().log(Level.SEVERE, "We will regenerate a language file for you");
+                getLogger().log(Level.SEVERE, "我们将会为您重新生成一份语言文件");
+                lang.forceRename("lang-backup-" + System.currentTimeMillis() + ".yml");
+                lang = new ConfigAccessor(this, "lang.yml");
+                lang.saveDefaultConfig();
+                lang.reloadConfig();
+            }
+            CheckUtil.checkLang(this, "lang.yml", MessageUtil.getSelectedLang(), lang.getConfig());
+        } catch (Throwable e) {
+            ExceptionUtil.print(e);
         }
-        CheckUtil.checkLang(this,"lang.yml",MessageUtil.getSelectedLang(),lang.getConfig());
     }
 }

@@ -20,7 +20,7 @@ public class CheckUtil {
             for(LangItem item : LangItem.values()) {
                 if(!configuration.isSet(lang+"."+item.getValue())) {
                     System.err.println("[WARNING] Checked one unsetted item: "+item.getValue()+" ,setting it to default...");
-                    configuration.set(lang + item.getValue(), defConfig.get("zh_CN." + item.getValue()));
+                    configuration.set(lang + "." + item.getValue(), defConfig.get("zh_CN." + item.getValue()));
                     configuration.save(new File(plugin.getDataFolder(),"lang.yml"));
                 }
             }

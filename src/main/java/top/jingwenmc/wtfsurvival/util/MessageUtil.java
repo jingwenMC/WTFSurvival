@@ -70,20 +70,18 @@ public class MessageUtil {
     }
 
     public static void sendWrappedMessage(CommandSender sender, LangItem langItem, boolean prefix, String[] replaceFrom , String[] replaceTo) {
-        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, prefix);
+        sendWrappedMessage(sender, getSelectedLang() + "." + langItem.getValue(), replaceFrom, replaceTo, prefix);
     }
 
     public static void sendWrappedMessage(CommandSender[] senders, LangItem langItem, boolean prefix, String[] replaceFrom , String[] replaceTo) {
         for(CommandSender sender : senders)
-        sendWrappedMessage(sender, langItem.getValue(), replaceFrom, replaceTo, prefix);
+        sendWrappedMessage(sender, getSelectedLang() + "." + langItem.getValue(), replaceFrom, replaceTo, prefix);
     }
 
 
     private static String getRawMessage(String rootWithLang) {
         try {
             StringBuilder r = new StringBuilder();
-            //TODO: Remove
-            System.out.println("[DEBUG] "+rootWithLang+" is List? "+getConfig().isList(rootWithLang));
             if (getConfig().isList(rootWithLang)) {
                 for (String s : getConfig().getStringList(rootWithLang)) {
                     r.append(s).append(System.lineSeparator());
@@ -100,6 +98,8 @@ public class MessageUtil {
 
     private static void sendWrappedMessage(CommandSender sender, String rootWithLang, String[] replaceFrom , String[] replaceTo, boolean prefix) {
         try {
+            System.out.println(replaceFrom);
+            System.out.println(replaceTo);
             if (getConfig().isList(rootWithLang)) {
                 for (String s : getConfig().getStringList(rootWithLang)) {
                     int i = 0;
@@ -129,16 +129,16 @@ public class MessageUtil {
     }
 
     private static FileConfiguration getConfig() {
-        return WTFSurvival.getInstance().getConfig();
+        return WTFSurvival.getInstance().getLang().getConfig();
     }
 
     private static String getPrefix() {
         try {
-            return WTFSurvival.getInstance().getConfig().getString(LangItem.PREFIX.getValue());
+            return getConfig().getString(getSelectedLang() + "." + LangItem.PREFIX.getValue());
         } catch (Throwable e) {
-            if(WTFSurvival.getInstance().getConfig().getString(LangItem.PREFIX.getValue()) == null) {
+            if(getConfig().getString(getSelectedLang() + "." + LangItem.PREFIX.getValue()) == null) {
                 WTFSurvival.getInstance().checkLang();
-                return WTFSurvival.getInstance().getConfig().getString(LangItem.PREFIX.getValue());
+                return getConfig().getString(getSelectedLang() + "." + LangItem.PREFIX.getValue());
             }
             else {
                 ExceptionUtil.print(e);

@@ -39,62 +39,68 @@ public class LoginUtil {
             return;
         }
         if(Util.isNoPerm(sender,"wtfs.login"))return;
-        new BukkitRunnable() {
-            boolean success = false;
-            boolean scanned = false;
-            @Override
-            public void run() {
+        final boolean[] success = {false};
+        final boolean[] scanned = {false};
                 locked = true;
                 //STEP1&2
                 MessageUtil.sendWrappedMessage(sender, LangItem.LOGIN_GENERATE);
+                String QRLink = getLoginQRCodeLink();
                 MessageUtil.sendWrappedMessage(sender, LangItem.LOGIN_GENERATE_FINISH
-                , new String[]{"%url"}, new String[]{getLoginQRCodeLink()});
-                int sec = 0;
+                , new String[]{"%url%"}, new String[]{QRLink});
                 //STEP 2&3
-                while(true) {
-                    if(sec==150) {
-                        success = false;
-                        break;
-                    }
-                    int query = query();
-                    if(query == 1) {
-                        if(!scanned) {
-                            MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_SCANNED);
+                new BukkitRunnable() {
+                    int sec = 0;
+                    @Override
+                    public void run() {
+                        while(true) {
+                            if (sec == 150) {
+                                success[0] = false;
+                                break;
+                            }
+                            int query = query();
+                            if (query == 1) {
+                                if (!scanned[0]) {
+                                    MessageUtil.sendWrappedMessage(sender, LangItem.LOGIN_SCANNED);
+                                }
+                                scanned[0] = true;
+                            }
+                            if (query == 2) {
+                                success[0] = true;
+                                MessageUtil.sendWrappedMessage(sender, LangItem.LOGIN_LOGGING_IN);
+                                break;
+                            }
+                            if (query == 3) {
+                                success[0] = false;
+                                break;
+                            }
+                            sec++;
+                            try {
+                                Thread.sleep(1000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        scanned = true;
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if(!success[0]) {
+                                    MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
+                                    locked = false;
+                                    return;
+                                }
+                                //STEP4
+                                if(verify()) {
+                                    MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_LOGGED_IN);
+                                    locked = false;
+                                    LikeToGiveEffects.isLoggedIn = true;
+                                    return;
+                                }
+                                MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
+                                locked = false;
+                            }
+                        }.runTask(WTFSurvival.getInstance());
                     }
-                    if(query == 2) {
-                        success = true;
-                        MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_LOGGING_IN);
-                        break;
-                    }
-                    if(query == 3) {
-                        success = false;
-                        break;
-                    }
-                    sec++;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        ExceptionUtil.print(e);
-                    }
-                }
-                if(!success) {
-                    MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
-                    locked = false;
-                    return;
-                }
-                //STEP4
-                if(verify()) {
-                    MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_LOGGED_IN);
-                    locked = false;
-                    LikeToGiveEffects.isLoggedIn = true;
-                    return;
-                }
-                MessageUtil.sendWrappedMessage(sender,LangItem.LOGIN_FAIL);
-                locked = false;
-            }
-        }.runTaskAsynchronously(WTFSurvival.getInstance());
+                }.runTaskAsynchronously(WTFSurvival.getInstance());
     }
 
     public static String getLoginQRCodeLink() {
