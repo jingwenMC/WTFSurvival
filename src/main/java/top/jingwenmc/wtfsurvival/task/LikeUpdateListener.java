@@ -37,7 +37,7 @@ public class LikeUpdateListener extends BukkitRunnable {
                     JSONObject jsonObject = JSON.parseObject(result);
                     if (!jsonObject.getString("message").equals("0")) return;
                     JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-                    int now = jsonObject1.getIntValue("likes");
+                    Integer now = jsonObject1.getInteger("likes");
                     if (now > beforeMap.get(uid)) {
                         new BukkitRunnable() {
                             @Override
@@ -46,8 +46,8 @@ public class LikeUpdateListener extends BukkitRunnable {
                             }
                         }.runTask(WTFSurvival.getInstance());
                     }
-
-                    beforeMap.replace(uid,now);
+                    beforeMap.remove(uid);
+                    beforeMap.put(uid,now);
                 }
             } catch (Throwable e) {
                 ExceptionUtil.print(e);
