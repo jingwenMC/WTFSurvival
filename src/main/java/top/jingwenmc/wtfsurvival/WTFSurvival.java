@@ -62,7 +62,7 @@ public final class WTFSurvival extends JavaPlugin {
         getCommand("wtfs").setExecutor(mainCommandManager);
         getCommand("wtfs").setTabCompleter(mainCommandManager);
         Bukkit.getPluginManager().registerEvents(new PlayerInOutListeners(),this);
-        new LikeUpdateListener().runTaskTimerAsynchronously(this,15,15);
+        new LikeUpdateListener().runTaskTimer(this,15,15);
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING_FINISH);
     }
 
