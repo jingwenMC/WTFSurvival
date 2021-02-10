@@ -5,7 +5,7 @@ zh_CN:
   update: #TODO
     release_available:
       - "检测到更新的正式发布版本:"
-      - "v%before% => v%after%"
+      - "v%before% -> v%after%"
       - "更新内容:"
     release_download:
       - "您可以到此处下载最新版本:"
@@ -34,7 +34,7 @@ zh_CN:
     cant_end: "没有进行中的游戏，结束了个寂寞。"
     join: "%player% 加入了游戏。"
     left: "%player% 离开了游戏。"
-    new_like: "收到了新的赞！"
+    new_like: "收到了新的赞！(%before% -> %after%)"
   login:
     someone_is_logging_in: "有人正在登录..."
     fail: "登录失败！可能是超时或者其他原因。"
