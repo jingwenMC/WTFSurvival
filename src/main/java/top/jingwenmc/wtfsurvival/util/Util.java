@@ -1,10 +1,20 @@
 package top.jingwenmc.wtfsurvival.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import top.jingwenmc.wtfsurvival.WTFSurvival;
 import top.jingwenmc.wtfsurvival.enums.LangItem;
+import top.jingwenmc.wtfsurvival.games.LikeToGiveEffects;
 
 import java.util.Random;
 
@@ -19,7 +29,7 @@ public class Util {
 
     public static PotionEffect setEffectToPlayers(Player[] players) {
         PotionEffectType type = getRandomType(new Random());
-        PotionEffect effect = new PotionEffect(type,15*20,0);
+        PotionEffect effect = new PotionEffect(type, WTFSurvival.getInstance().getConfig().getInt("potion_time"),0);
         for(Player player : players) {
             player.addPotionEffect(effect);
         }
@@ -28,5 +38,20 @@ public class Util {
 
     public static PotionEffectType getRandomType(Random random) {
         return PotionEffectType.values()[random.nextInt(PotionEffectType.values().length)];
+    }
+
+    public static String getUpName(String uid) {
+        if(!LikeToGiveEffects.isLoggedIn)return null;
+        HttpGet httpGet = new HttpGet("http://api.bilibili.com/x/space/acc/info?mid="+uid);
+        try(CloseableHttpClient httpClient = HttpClients.custom().setDefaultCookieStore(LoginUtil.cookieStore).build();
+            CloseableHttpResponse response = httpClient.execute(httpGet)) {
+            HttpEntity entity = response.getEntity();
+            JSONObject object = JSON.parseObject(EntityUtils.toString(entity));
+            assert object.getJSONObject("data") != null;
+            return object.getJSONObject("data").getString("name");
+        } catch (Throwable e) {
+            ExceptionUtil.print(e);
+        }
+        return null;
     }
 }

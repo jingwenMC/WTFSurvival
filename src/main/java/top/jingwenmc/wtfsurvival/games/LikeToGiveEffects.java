@@ -54,10 +54,13 @@ public class LikeToGiveEffects extends GameplayRule implements Listener {
 
     @EventHandler
     public void onUpdate(LikeUpdateEvent event) {
-        MessageUtil.sendWrappedMessage(getGame().getPlayers().toArray(new Player[0]), LangItem.GAME_NEW_LIKE,
-                new String[]{"%before%","%after%"},
-                new String[]{String.valueOf(event.getBefore()), String.valueOf(event.getAfter())});
         if(this.getGame().getStatus().equals(GameStatus.DESTROYED))return;
+
+        MessageUtil.sendWrappedMessage(getGame().getPlayers().toArray(new Player[0]), LangItem.GAME_NEW_LIKE,
+                new String[]{"%name%","%before%","%after%"},
+                new String[]{Util.getUpName(event.getUid())
+                        ,String.valueOf(event.getBefore())
+                        , String.valueOf(event.getAfter())});
         Util.setEffectToPlayers(getGame().getPlayers().toArray(new Player[0]));
     }
 }

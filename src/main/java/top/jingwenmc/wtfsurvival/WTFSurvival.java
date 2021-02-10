@@ -46,7 +46,7 @@ public final class WTFSurvival extends JavaPlugin {
         getLogger().log(Level.INFO,"Checking Language file...");
         getLogger().log(Level.INFO,"正在检查语言文件...");
         checkLang();
-        LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
+        LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getStringList("bili_uid"));
         MessageUtil.sendWrappedMessageToConsole(LangItem.CONSOLE_LOADING);
         mainCommandManager = new SubCommandManager();
         gameManager = new GameManager();

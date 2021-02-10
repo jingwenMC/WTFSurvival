@@ -35,8 +35,9 @@ public class CMDreload implements CommandItem {
             WTFSurvival.getInstance().getLogger().log(Level.INFO,"Checking Language file...");
             WTFSurvival.getInstance().getLogger().log(Level.INFO,"正在检查语言文件...");
             WTFSurvival.getInstance().checkLang();
-            LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getString("bili_uid"));
+            LikeUpdateListener.setListen(WTFSurvival.getInstance().getConfig().getStringList("bili_uid"));
             MessageUtil.sendWrappedMessage(Bukkit.getOnlinePlayers().toArray(new Player[0]), LangItem.SERVER_RELOAD_FINISH);
+            MessageUtil.sendWrappedMessageToConsole(LangItem.SERVER_RELOAD_FINISH);
             return true;
         } catch (Throwable e) {
             ExceptionUtil.print(e);

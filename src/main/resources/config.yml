@@ -4,4 +4,8 @@
 lang: "zh_CN"
 
 #监测的Bilibili账户UID
-bili_uid: 8689128
+bili_uid:
+  - "8689128"
+
+#药水效果时长 / 单位:游戏刻( 1/20 秒)
+potion_time: 200

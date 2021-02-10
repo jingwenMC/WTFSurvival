@@ -16,36 +16,49 @@ import top.jingwenmc.wtfsurvival.games.LikeToGiveEffects;
 import top.jingwenmc.wtfsurvival.util.ExceptionUtil;
 import top.jingwenmc.wtfsurvival.util.LoginUtil;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class LikeUpdateListener extends BukkitRunnable {
-    int before = 0;
-    static HttpGet request = new HttpGet("http://api.bilibili.com/x/space/upstat?mid="+"289155331");
+    //int before = 0;
+    static Map<String , HttpGet> requests = new HashMap<>();
+    static Map<String , Integer> beforeMap = new HashMap<>();
     @Override
     public void run() {
         if(!LikeToGiveEffects.isLoggedIn) return;
-        try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultCookieStore(LoginUtil.cookieStore).build();
-             CloseableHttpResponse httpResponse = httpClient.execute(request)) {
-            HttpEntity httpEntity = httpResponse.getEntity();
-            if (httpEntity != null) {
-                String result = EntityUtils.toString(httpEntity);
-                JSONObject jsonObject = JSON.parseObject(result);
-            if(!jsonObject.getString("message").equals("0")) return;
-            JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-            int now = jsonObject1.getIntValue("likes");
-            if(now > before) {
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        Bukkit.getPluginManager().callEvent(new LikeUpdateEvent(before,now));
+        for(String uid : requests.keySet()) {
+            HttpGet request = requests.get(uid);
+            try (CloseableHttpClient httpClient = HttpClients.custom().setDefaultCookieStore(LoginUtil.cookieStore).build();
+                 CloseableHttpResponse httpResponse = httpClient.execute(request)) {
+                HttpEntity httpEntity = httpResponse.getEntity();
+                if (httpEntity != null) {
+                    String result = EntityUtils.toString(httpEntity);
+                    JSONObject jsonObject = JSON.parseObject(result);
+                    if (!jsonObject.getString("message").equals("0")) return;
+                    JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+                    int now = jsonObject1.getIntValue("likes");
+                    if (now > beforeMap.get(uid)) {
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                Bukkit.getPluginManager().callEvent(new LikeUpdateEvent(uid, beforeMap.get(uid), now));
+                            }
+                        }.runTask(WTFSurvival.getInstance());
                     }
-                }.runTask(WTFSurvival.getInstance());
+
+                    beforeMap.replace(uid,now);
+                }
+            } catch (Throwable e) {
+                ExceptionUtil.print(e);
             }
-            before = now;
-            }
-        } catch (Throwable e) {
-            ExceptionUtil.print(e);
         }
     }
-    public static void setListen(String listenTo) {
-        request = new HttpGet("http://api.bilibili.com/x/space/upstat?mid="+listenTo);
+    public static void setListen(List<String> listenTo) {
+        requests.clear();
+        for(String listen : listenTo) {
+            requests.put(listen,new HttpGet("http://api.bilibili.com/x/space/upstat?mid="+listen));
+            beforeMap.put(listen,0);
+        }
     }
 }
