@@ -12,10 +12,12 @@ public abstract class GameplayRule {
     }
 
     protected Game getGame() {
+        if(game==null) throw new IllegalStateException("Game Not Set!");
         return game;
     }
 
     protected void setGame(Game game) {
+        if(this.game!=null)throw new IllegalStateException("Game Already Set!");
         this.game = game;
     }
 
