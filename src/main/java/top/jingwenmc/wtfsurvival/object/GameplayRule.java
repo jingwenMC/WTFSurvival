@@ -3,7 +3,6 @@ package top.jingwenmc.wtfsurvival.object;
 import org.bukkit.entity.Player;
 
 public abstract class GameplayRule {
-    //todo: add disconnect detect
     String gameplayRuleName;
     Game game;
 
