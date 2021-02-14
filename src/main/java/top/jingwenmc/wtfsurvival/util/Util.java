@@ -39,7 +39,11 @@ public class Util {
     }
 
     public static PotionEffectType getRandomType(Random random) {
-        return PotionEffectType.values()[random.nextInt(PotionEffectType.values().length)];
+        PotionEffectType type =  PotionEffectType.values()[random.nextInt(PotionEffectType.values().length)];
+        if(type == PotionEffectType.HARM || type == PotionEffectType.WITHER) {
+            type = random.nextInt(2) == 0 ? PotionEffectType.POISON : PotionEffectType.HEAL;
+        }
+        return type;
     }
 
     public static String getUpName(String uid) {
